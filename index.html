@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="pl">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Aktualna godzina</title>
+  </head>
+  <body>
+    <h1 id="time"></h1>
+    <button id="saveButton">Zapisz</button>
+    <ul id="timeList"></ul>
+    <script>
+      const showCurrentTime = () => {
+        const now = new Date();
+        const hours = now.getHours().toString().padStart(2, "0");
+        const minutes = now.getMinutes().toString().padStart(2, "0");
+        const seconds = now.getSeconds().toString().padStart(2, "0");
+        document.getElementById(
+          "time"
+        ).innerText = `Aktualna godzina: ${hours}:${minutes}:${seconds}`;
+      };
+
+      setInterval(showCurrentTime, 1000);
+
+      document.getElementById("saveButton").addEventListener("click", () => {
+        const now = new Date();
+        const hours = now.getHours().toString().padStart(2, "0");
+        const minutes = now.getMinutes().toString().padStart(2, "0");
+        const seconds = now.getSeconds().toString().padStart(2, "0");
+        const timeString = `${hours}:${minutes}:${seconds}`;
+
+        const li = document.createElement("li");
+        li.innerText = timeString;
+        document.getElementById("timeList").appendChild(li);
+      });
+    </script>
+    <script type="application/json">
+      {
+        "description": "This script displays the current time and updates it every second."
+      }
+    </script>
+  </body>
+</html>
