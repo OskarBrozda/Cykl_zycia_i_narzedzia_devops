@@ -1,0 +1,14 @@
+/Users/oskarbrozda/GitHub/Cykl_zycia_i_narzedzia_devops/MojaAplikacja/bin/Debug/net7.0/MojaAplikacja
+/Users/oskarbrozda/GitHub/Cykl_zycia_i_narzedzia_devops/MojaAplikacja/bin/Debug/net7.0/MojaAplikacja.deps.json
+/Users/oskarbrozda/GitHub/Cykl_zycia_i_narzedzia_devops/MojaAplikacja/bin/Debug/net7.0/MojaAplikacja.runtimeconfig.json
+/Users/oskarbrozda/GitHub/Cykl_zycia_i_narzedzia_devops/MojaAplikacja/bin/Debug/net7.0/MojaAplikacja.dll
+/Users/oskarbrozda/GitHub/Cykl_zycia_i_narzedzia_devops/MojaAplikacja/bin/Debug/net7.0/MojaAplikacja.pdb
+/Users/oskarbrozda/GitHub/Cykl_zycia_i_narzedzia_devops/MojaAplikacja/obj/Debug/net7.0/MojaAplikacja.GeneratedMSBuildEditorConfig.editorconfig
+/Users/oskarbrozda/GitHub/Cykl_zycia_i_narzedzia_devops/MojaAplikacja/obj/Debug/net7.0/MojaAplikacja.AssemblyInfoInputs.cache
+/Users/oskarbrozda/GitHub/Cykl_zycia_i_narzedzia_devops/MojaAplikacja/obj/Debug/net7.0/MojaAplikacja.AssemblyInfo.cs
+/Users/oskarbrozda/GitHub/Cykl_zycia_i_narzedzia_devops/MojaAplikacja/obj/Debug/net7.0/MojaAplikacja.csproj.CoreCompileInputs.cache
+/Users/oskarbrozda/GitHub/Cykl_zycia_i_narzedzia_devops/MojaAplikacja/obj/Debug/net7.0/MojaAplikacja.dll
+/Users/oskarbrozda/GitHub/Cykl_zycia_i_narzedzia_devops/MojaAplikacja/obj/Debug/net7.0/refint/MojaAplikacja.dll
+/Users/oskarbrozda/GitHub/Cykl_zycia_i_narzedzia_devops/MojaAplikacja/obj/Debug/net7.0/MojaAplikacja.pdb
+/Users/oskarbrozda/GitHub/Cykl_zycia_i_narzedzia_devops/MojaAplikacja/obj/Debug/net7.0/MojaAplikacja.genruntimeconfig.cache
+/Users/oskarbrozda/GitHub/Cykl_zycia_i_narzedzia_devops/MojaAplikacja/obj/Debug/net7.0/ref/MojaAplikacja.dll
