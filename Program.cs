@@ -1,38 +1,39 @@
 ﻿using System;
-using System.Timers; 
+using System.Timers;
 using System.Collections.Generic;
 
 class Program
 {
-    static System.Timers.Timer timer = new System.Timers.Timer(1000); 
-    static List<string> savedTimes = new List<string>(); 
+    static System.Timers.Timer timer = new System.Timers.Timer(1000); // Timer co sekundę
+    static List<string> savedTimes = new List<string>(); // Lista zapisanych czasów
+    static bool isRunning = true; // Flaga kontrolująca działanie aplikacji
 
-    static void Main()
+    static void Main(string[] args)
     {
+        Console.WriteLine("Aplikacja działa w trybie nieinteraktywnym.");
+
+        // Timer wyświetlający aktualny czas co sekundę
         timer.Elapsed += ShowCurrentTime;
         timer.Start();
 
-        Console.WriteLine("Press [Enter] to save the current time or [Esc] to exit.");
-        while (true)
+        // Tryb nieinteraktywny: aplikacja działa w nieskończoność
+        while (isRunning)
         {
-            var key = Console.ReadKey(true).Key;
-            if (key == ConsoleKey.Enter)
-            {
-                SaveCurrentTime();
-            }
-            else if (key == ConsoleKey.Escape)
-            {
-                break;
-            }
+            // Symulacja automatycznego zapisu czasu co 5 sekund
+            SaveCurrentTime();
+            System.Threading.Thread.Sleep(5000);
         }
+
+        timer.Stop();
+        Console.WriteLine("Aplikacja została zakończona.");
     }
 
     private static void ShowCurrentTime(object sender, ElapsedEventArgs e)
     {
-        Console.SetCursorPosition(0, 0); 
+        Console.Clear();
         Console.WriteLine($"Aktualna godzina: {DateTime.Now:HH:mm:ss}");
-    
-        Console.SetCursorPosition(0, 2); 
+
+        Console.WriteLine("\nZapisane czasy:");
         foreach (var time in savedTimes)
         {
             Console.WriteLine(time);
@@ -42,6 +43,7 @@ class Program
     private static void SaveCurrentTime()
     {
         string timeString = DateTime.Now.ToString("HH:mm:ss");
-        savedTimes.Add(timeString);  // Dodajemy zapisany czas do listy
+        savedTimes.Add(timeString);
+        Console.WriteLine($"Zapisano czas: {timeString}");
     }
 }
