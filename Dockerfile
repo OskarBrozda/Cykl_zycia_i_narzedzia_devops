@@ -1,27 +1,17 @@
-# Faza budowania: użycie obrazu SDK .NET
-FROM mcr.microsoft.com/dotnet/sdk:7.0 AS build
+# Używamy obrazu .NET SDK do budowania aplikacji
+FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
+WORKDIR /src
 
-# Ustawienie katalogu roboczego
-WORKDIR /source
+# Kopiowanie plików projektu i przywrócenie zależności
+COPY . ./ 
+RUN dotnet restore Cykl_zycia_i_narzedzia_devops.sln
 
-# Kopiowanie plików projektu do kontenera
-COPY . .
+# Kopiowanie kodu źródłowego i budowanie aplikacji
+COPY . ./ 
+RUN dotnet publish /src/Cykl_zycia_i_narzedzia_devops.sln -c Release -o /app
 
-# Przygotowanie i budowanie projektu
-RUN dotnet restore
-RUN dotnet publish -c Release -o /app
-
-# Faza uruchamiania: użycie obrazu runtime .NET
-FROM mcr.microsoft.com/dotnet/aspnet:7.0 AS runtime
-
-# Ustawienie katalogu roboczego
+# Używamy lżejszego obrazu do uruchamiania aplikacji
+FROM mcr.microsoft.com/dotnet/runtime:8.0 AS runtime
 WORKDIR /app
-
-# Skopiowanie opublikowanych plików z poprzedniego etapu
 COPY --from=build /app .
-
-# Wystawienie portu aplikacji
-EXPOSE 5001
-
-# Uruchomienie aplikacji
 ENTRYPOINT ["dotnet", "MojaAplikacja.dll"]

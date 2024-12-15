@@ -1,42 +1,49 @@
 ﻿using System;
-using System.Timers;
 using System.Collections.Generic;
+using System.Data;
+using MySql.Data.MySqlClient;
+using System.Threading;
 
 class Program
 {
-    static System.Timers.Timer timer = new System.Timers.Timer(1000); // Timer co sekundę
-    static List<string> savedTimes = new List<string>(); // Lista zapisanych czasów
-    static bool isRunning = true; // Flaga kontrolująca działanie aplikacji
+    static List<string> savedTimes = new List<string>();
+    static bool isRunning = true;
+
+    static string connectionString = "Server=mysql;Database=timeServer_db;User=root;Password=zaq1@WSX;";
 
     static void Main(string[] args)
     {
-        Console.WriteLine("Aplikacja działa w trybie nieinteraktywnym.");
+        Console.CursorVisible = false;
 
-        // Timer wyświetlający aktualny czas co sekundę
-        timer.Elapsed += ShowCurrentTime;
-        timer.Start();
+        LoadTimesFromDatabase(); 
 
-        // Tryb nieinteraktywny: aplikacja działa w nieskończoność
         while (isRunning)
         {
-            // Symulacja automatycznego zapisu czasu co 5 sekund
-            SaveCurrentTime();
-            System.Threading.Thread.Sleep(5000);
-        }
+            Console.Clear();
 
-        timer.Stop();
-        Console.WriteLine("Aplikacja została zakończona.");
-    }
+            Console.WriteLine($"Aktualna godzina: {DateTime.Now:HH:mm:ss}\n");
 
-    private static void ShowCurrentTime(object sender, ElapsedEventArgs e)
-    {
-        Console.Clear();
-        Console.WriteLine($"Aktualna godzina: {DateTime.Now:HH:mm:ss}");
+            Console.WriteLine("Zapisane czasy:");
+            foreach (var time in savedTimes)
+            {
+                Console.WriteLine(time);
+            }
 
-        Console.WriteLine("\nZapisane czasy:");
-        foreach (var time in savedTimes)
-        {
-            Console.WriteLine(time);
+            Thread.Sleep(1000);
+
+            while (Console.KeyAvailable)
+            {
+                var key = Console.ReadKey(intercept: true);
+
+                if (key.Key == ConsoleKey.Enter)
+                {
+                    SaveCurrentTime();
+                }
+                else if (key.Key == ConsoleKey.Escape)
+                {
+                    isRunning = false;
+                }
+            }
         }
     }
 
@@ -44,6 +51,40 @@ class Program
     {
         string timeString = DateTime.Now.ToString("HH:mm:ss");
         savedTimes.Add(timeString);
-        Console.WriteLine($"Zapisano czas: {timeString}");
+        SaveTimeToDatabase(timeString);
+    }
+
+    private static void SaveTimeToDatabase(string time)
+    {
+        using (var connection = new MySqlConnection(connectionString))
+        {
+            connection.Open();
+            string query = "INSERT INTO times (time_value) VALUES (@time)";
+            using (var cmd = new MySqlCommand(query, connection))
+            {
+                cmd.Parameters.AddWithValue("@time", time);
+                cmd.ExecuteNonQuery();
+            }
+        }
+    }
+
+    private static void LoadTimesFromDatabase()
+    {
+        savedTimes.Clear();
+        using (var connection = new MySqlConnection(connectionString))
+        {
+            connection.Open();
+            string query = "SELECT time_value FROM times";
+            using (var cmd = new MySqlCommand(query, connection))
+            {
+                using (var reader = cmd.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+                        savedTimes.Add(reader.GetString("time_value"));
+                    }
+                }
+            }
+        }
     }
 }
