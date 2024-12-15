@@ -2,7 +2,10 @@ CREATE DATABASE timeServer_db;
 
 USE timeServer_db;
 
-IF NOT EXISTS (SELECT * FROM information_schema.tables WHERE table_name = 'times')
-CREATE TABLE times (
-    id INT IDENTITY(1,1) PRIMARY KEY,
-);
+IF NOT EXISTS (SELECT * FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_NAME = 'times')
+BEGIN
+    CREATE TABLE times (
+        id INT IDENTITY(1,1) PRIMARY KEY,
+        time_value VARCHAR(8) NOT NULL
+    );
+END;
