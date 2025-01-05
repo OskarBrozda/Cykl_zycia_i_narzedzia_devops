@@ -9,7 +9,7 @@ class Program
     static List<string> savedTimes = new List<string>();
     static bool isRunning = true;
 
-    static string connectionString = "Server=localhost;Database=timeServer_db;User=user;Password=zaq1@WSX;";
+    static readonly string connectionString = "Server=mysql-db;Database=timeServer_db;User=user;Password=zaq1@WSX";
 
     static void Main(string[] args)
     {
@@ -32,29 +32,16 @@ class Program
             }
 
             Thread.Sleep(1000);
-
-            while (Console.KeyAvailable)
-            {
-                var key = Console.ReadKey(intercept: true);
-
-                if (key.Key == ConsoleKey.Enter)
-                {
-                    SaveCurrentTime();
-                    continue;
-                }
-                else if (key.Key == ConsoleKey.Escape)
-                {
-                    isRunning = false;
-                }
-            }
         }
     }
 
     private static void MigrateDatabase()
 {
+     Console.WriteLine("Wejście do migrate");
     using (var connection = new MySqlConnection(connectionString))
     {
         connection.Open();
+         Console.WriteLine("Połączenie z bazą danych");
         string query = @"
             CREATE TABLE IF NOT EXISTS times (
                 id INT AUTO_INCREMENT PRIMARY KEY,
@@ -63,6 +50,7 @@ class Program
 
         using (var cmd = new MySqlCommand(query, connection))
         {
+            Console.WriteLine("Migracja");
             try
             {
                 cmd.ExecuteNonQuery();
@@ -106,6 +94,7 @@ class Program
 
     private static void LoadTimesFromDatabase()
     {
+        Console.WriteLine("LoadTimesFromDatabase");
         savedTimes.Clear();
         using (var connection = new MySqlConnection(connectionString))
         {
@@ -115,11 +104,14 @@ class Program
             string query = "SELECT time_value FROM times";
             using (var cmd = new MySqlCommand(query, connection))
             {
+                Console.WriteLine("Query");
                 using (var reader = cmd.ExecuteReader())
                 {
+                    Console.WriteLine("Reader");
                     while (reader.Read())
                     {
                         savedTimes.Add(reader.GetString("time_value"));
+                        Console.WriteLine("Add to savedTimes");
                     }
                 }
             }
