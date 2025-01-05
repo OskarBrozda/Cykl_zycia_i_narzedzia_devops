@@ -11,7 +11,7 @@ COPY . ./
 RUN dotnet publish /src/Cykl_zycia_i_narzedzia_devops.sln -c Release -o /app
 
 # Używamy lżejszego obrazu do uruchamiania aplikacji
-FROM mcr.microsoft.com/dotnet/runtime:8.0 AS runtime
+FROM mcr.microsoft.com/dotnet/aspnet:8.0 AS runtime
 WORKDIR /app
 COPY --from=build /app .
 ENTRYPOINT ["dotnet", "MojaAplikacja.dll"]
